@@ -128,6 +128,6 @@ django_heroku.settings(locals())
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
 )
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 prod_db  =  dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)

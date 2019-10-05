@@ -25,10 +25,10 @@ def verifyOrRegister(request, phone):
 
     return HttpResponse(json.dumps(dicti)) #Add code to actually check successful submission
 
-def submitAnswer(request, phone, answer, addPoint):
+def submitAnswer(request, phone, answer, addPoint, regionId):
     dicti = {}
     userObject = models.user.objects.get(phone=phone)
-    translationObject = models.translation(questionId=userObject.progress, question=data.iloc[userObject.progress]['Hindi'], answer=answer, by=userObject)
+    translationObject = models.translation(questionId=userObject.progress, question=data.iloc[userObject.progress]['Hindi'], answer=answer,regionId=regionId, by=userObject)
     translationObject.save()
     userObject.progress += 1
     userObject.points += addPoint

@@ -11,6 +11,7 @@ class user(models.Model):
 
 class translation(models.Model):
     questionId = models.IntegerField()
+    regionId = models.IntegerField()
     question = models.CharField(max_length=100)
     answer = models.CharField(max_length=100)
     by = models.ForeignKey(user, on_delete=models.CASCADE)
