@@ -5,7 +5,7 @@ import pandas as pd
 import json
 # Create your views here.
 
-data = pd.read_excel('C:/Users/lenovo/Projects/Translation_backend/Translation_backend/main/res/wordsData.xlsx')
+data = pd.read_excel('https://srv-file7.gofile.io/download/VYSJAm/wordsData.xlsx')
 
 def index(request):
     return HttpResponse("This was successfull")
