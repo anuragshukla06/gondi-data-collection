@@ -24,7 +24,7 @@ SECRET_KEY = '0xuqaa8d4!k3bj01w%n2#_=9+f9g)y!j6%razd8x72_f9-ybmd'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.43.235', '127.0.0.1']
+ALLOWED_HOSTS = ['gondi-data-collection.52kajbsigc.ap-south-1.elasticbeanstalk.com', '127.0.0.1']
 
 
 # Application definition
