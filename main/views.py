@@ -5,7 +5,8 @@ import pandas as pd
 import json
 # Create your views here.
 
-data = pd.read_excel('https://github.com/cgnetswara/TransDataCollectionBackend/raw/master/projectBackEnd/main/res/wordsData.xlsx')
+data = pd.read_csv("https://github.com/cgnetswara/TransDataCollectionBackend/raw/master/projectBackEnd/main/res/hindi_sentences.csv", delimiter = '\t', names=["tatoeba", "number", "hindi"])
+
 
 def index(request):
     return HttpResponse("This was successfull")
@@ -28,7 +29,7 @@ def verifyOrRegister(request, phone):
 def submitAnswer(request, phone, answer, addPoint, regionId):
     dicti = {}
     userObject = models.user.objects.get(phone=phone)
-    translationObject = models.translation(questionId=userObject.progress, question=data.iloc[userObject.progress]['Hindi'], answer=answer,regionId=regionId, by=userObject)
+    translationObject = models.translation(questionId=userObject.progress, question=data['hindi'].iloc[userObject.progress], answer=answer,regionId=regionId, by=userObject)
     translationObject.save()
     userObject.progress += 1
     userObject.points += addPoint
@@ -44,4 +45,7 @@ def fetchQuestion(request, phone):
     # Take care of database end case
     userObject = models.user.objects.get(phone=phone)
     progress = userObject.progress
-    return HttpResponse(data.iloc[progress]['Hindi'])
+    print(data.head())
+    if progress >= len(data['hindi']):
+        return HttpResponse("EOF")
+    return HttpResponse(data['hindi'].iloc[progress])
