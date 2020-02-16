@@ -3,6 +3,6 @@ from . import views
 urlpatterns = [
     path('', views.index),
     path('verifyOrRegister/<phone>', views.verifyOrRegister),
-    path('submitAnswer/<phone>/<answer>/<int:addPoint>/<int:regionId>', views.submitAnswer),
-    path('fetchQuestion/<phone>', views.fetchQuestion),
+    path('submitAnswer/', views.submitAnswer),
+    path('fetchQuestion/', views.fetchQuestion),
 ]

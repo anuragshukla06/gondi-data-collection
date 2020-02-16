@@ -3,10 +3,11 @@ from django.http import HttpResponse
 from . import models
 import pandas as pd
 import json
+from django.views.decorators.csrf import csrf_exempt
+
 # Create your views here.
 
 data = pd.read_csv("https://github.com/cgnetswara/TransDataCollectionBackend/raw/master/projectBackEnd/main/res/hindi_sentences.csv", delimiter = '\t', names=["tatoeba", "number", "hindi"])
-
 
 def index(request):
     return HttpResponse("This was successfull")
@@ -26,26 +27,32 @@ def verifyOrRegister(request, phone):
 
     return HttpResponse(json.dumps(dicti)) #Add code to actually check successful submission
 
-def submitAnswer(request, phone, answer, addPoint, regionId):
-    dicti = {}
-    userObject = models.user.objects.get(phone=phone)
-    translationObject = models.translation(questionId=userObject.progress, question=data['hindi'].iloc[userObject.progress], answer=answer,regionId=regionId, by=userObject)
-    translationObject.save()
-    userObject.progress += 1
-    userObject.points += addPoint
-    userObject.save()
+@csrf_exempt
+def submitAnswer(request):
+    if request.method == 'POST':
+        dicti = {}
+        params = request.POST
+        phone = params['phone']; answer = params['answer']; addPoint = int(params['addPoint']); regionId = params['regionId']
+        userObject = models.user.objects.get(phone=phone)
+        translationObject = models.translation(questionId=userObject.progress, question=data['hindi'].iloc[userObject.progress], answer=answer,regionId=regionId, by=userObject)
+        translationObject.save()
+        userObject.progress += 1
+        userObject.points += addPoint
+        userObject.save()
 
-    dicti['phone'] = userObject.phone
-    dicti['progress'] = userObject.progress
-    dicti['points'] = userObject.points
-    return HttpResponse(json.dumps((dicti)))
+        dicti['phone'] = userObject.phone
+        dicti['progress'] = userObject.progress
+        dicti['points'] = userObject.points
+        return HttpResponse(json.dumps((dicti)))
 
-def fetchQuestion(request, phone):
-    # possible optimisation if progress is saved locally.
-    # Take care of database end case
-    userObject = models.user.objects.get(phone=phone)
-    progress = userObject.progress
-    print(data.head())
-    if progress >= len(data['hindi']):
-        return HttpResponse("EOF")
-    return HttpResponse(data['hindi'].iloc[progress])
+@csrf_exempt
+def fetchQuestion(request):
+    if request.method == 'POST':
+        # possible optimisation if progress is saved locally.
+        # Take care of database end case
+        userObject = models.user.objects.get(phone=request.POST['phone'])
+        progress = userObject.progress
+        # print(data.head())
+        if progress >= len(data['hindi']):
+            return HttpResponse("EOF")
+        return HttpResponse(data['hindi'].iloc[progress])
