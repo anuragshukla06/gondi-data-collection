@@ -27,6 +27,12 @@ def verifyOrRegister(request, phone):
 
     return HttpResponse(json.dumps(dicti)) #Add code to actually check successful submission
 
+def update_progress(userObject):
+    userObject.progress += 1
+    total_translated = models.total_translated.objects.latest()
+    total_translated += 1
+    total_translated.save()
+
 @csrf_exempt
 def submitAnswer(request):
     if request.method == 'POST':
@@ -34,9 +40,10 @@ def submitAnswer(request):
         params = request.POST
         phone = params['phone']; answer = params['answer']; addPoint = int(params['addPoint']); regionId = params['regionId']
         userObject = models.user.objects.get(phone=phone)
+        
         translationObject = models.translation(questionId=userObject.progress, question=data['hindi'].iloc[userObject.progress], answer=answer,regionId=regionId, by=userObject)
         translationObject.save()
-        userObject.progress += 1
+        update_progress(userObject)
         userObject.points += addPoint
         userObject.save()
 
@@ -51,8 +58,8 @@ def fetchQuestion(request):
         # possible optimisation if progress is saved locally.
         # Take care of database end case
         userObject = models.user.objects.get(phone=request.POST['phone'])
-        progress = userObject.progress
+        total_translated = models.total_translated.objects.latest()
         # print(data.head())
-        if progress >= len(data['hindi']):
+        if total_translated >= len(data['hindi']):
             return HttpResponse("EOF")
-        return HttpResponse(data['hindi'].iloc[progress])
+        return HttpResponse(data['hindi'].iloc[total_translated])

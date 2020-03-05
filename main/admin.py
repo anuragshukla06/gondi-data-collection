@@ -21,3 +21,4 @@ class translationAdmin(ImportExportModelAdmin):
     
 admin.site.register(models.user, userAdmin)
 admin.site.register(models.translation, translationAdmin)
+admin.site.register(models.total_translated)
