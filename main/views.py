@@ -29,8 +29,8 @@ def verifyOrRegister(request, phone):
 
 def update_progress(userObject):
     userObject.progress += 1
-    total_translated = models.total_translated.objects.latest()
-    total_translated += 1
+    total_translated = models.total_translated.objects.latest('id')
+    total_translated.progress += 1
     total_translated.save()
 
 @csrf_exempt
@@ -58,7 +58,7 @@ def fetchQuestion(request):
         # possible optimisation if progress is saved locally.
         # Take care of database end case
         userObject = models.user.objects.get(phone=request.POST['phone'])
-        total_translated = models.total_translated.objects.latest()
+        total_translated = models.total_translated.objects.latest('id').progress
         # print(data.head())
         if total_translated >= len(data['hindi']):
             return HttpResponse("EOF")
