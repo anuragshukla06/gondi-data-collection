@@ -104,6 +104,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# # Celery configuration
+# BROKER_URL = 'amqp://'
+# CELERY_ACCEPT_CONTENT = ['pickle']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
+
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'shukla.anurag0006@gmail.com' #Please Enter your email here
+EMAIL_HOST_PASSWORD = 'Adivannik01' #Password
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
