@@ -32,7 +32,7 @@ class EmailThread (threading.Thread):
             subject = "Adivasi Swara Activity Report"
             send_mail(subject, 'plain_text', from_mail, admin_mails, html_message=html_text)
             print("email sent")
-            time.sleep(60) #delay in seconds
+            time.sleep(24*60*60) #delay in seconds
         print ("Exiting " + self.name)
 
 data = pd.read_csv("https://github.com/cgnetswara/TransDataCollectionBackend/raw/master/projectBackEnd/main/res/hindi_sentences.csv", delimiter = '\t', names=["tatoeba", "number", "hindi"])
