@@ -116,8 +116,8 @@ CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'shukla.anurag0006@gmail.com' #Please Enter your email here
-EMAIL_HOST_PASSWORD = 'Adivannik01' #Password
+EMAIL_HOST_USER = '' #Please Enter your email here
+EMAIL_HOST_PASSWORD = '' #Password
 
 
 # Internationalization

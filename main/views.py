@@ -18,8 +18,14 @@ class EmailThread (threading.Thread):
     def run(self):
         admin_mails = [
             'shukla.anurag0006@gmail.com',
+            'kalikabali@gmail.com',
+            'smitashu@gmail.com',
+            'devansh76@gmail.com,'
+            'diptendudip@gmail.com',
+            'vishnuprasad.k214@gmail.com',
+            'sebastinssanty@gmail.com',
         ]
-        from_mail = 'shukla.anurag0006@gmail.com'
+        from_mail = 'aadivasiswara@gmail.com'
         print ("Starting " + self.name)
         while True:
             last_time = datetime.datetime.now()
@@ -71,12 +77,16 @@ def submitAnswer(request):
         params = request.POST
         phone = params['phone']; answer = params['answer']; addPoint = int(params['addPoint']); regionId = params['regionId']
         userObject = models.user.objects.get(phone=phone)
-        
+        print(answer, 'answer_debug')
+        # f = open("test.txt", "w")
+        # f.write(answer)
+        # f.close()
         translationObject = models.translation(questionId=userObject.progress, 
                                                     question=data['hindi'].iloc[userObject.progress], 
                                                     answer=answer,regionId=regionId, 
                                                     by=userObject,
                                                     time=datetime.datetime.now())
+        print(translationObject.answer, 'answer_debug_after_database')
         translationObject.save()
         update_progress(userObject)
         userObject.points += addPoint
