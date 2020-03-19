@@ -43,8 +43,8 @@ class EmailThread (threading.Thread):
 
 data = pd.read_csv("https://github.com/cgnetswara/TransDataCollectionBackend/raw/master/projectBackEnd/main/res/hindi_sentences.csv", delimiter = '\t', names=["tatoeba", "number", "hindi"])
 
-emailThread = EmailThread()
-emailThread.start()
+# emailThread = EmailThread()
+# emailThread.start()
 
 def index(request):
     return HttpResponse("This was successfull")
@@ -53,7 +53,7 @@ def verifyOrRegister(request, phone):
     dicti = {}
     userObject = None
     if not(models.user.objects.filter(phone = phone).exists()):
-        userObject = models.user(phone=phone, progress=0, points=0, time=datetime.datetime.now())
+        userObject = models.user(phone=phone, progress=0, points=0, register_time=datetime.datetime.now())
         userObject.save()
     else:
         userObject = models.user.objects.get(phone=phone)
