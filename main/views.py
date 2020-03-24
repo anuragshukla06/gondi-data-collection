@@ -29,22 +29,27 @@ class EmailThread (threading.Thread):
         print ("Starting " + self.name)
         while True:
             last_time = datetime.datetime.now()
+            for i in range(24): # A hack to get around database connection timeout
+                day_registrations = models.user.objects.filter(register_time__gte = last_time).count()
+                time.sleep(60*60) #delay in seconds
             day_registrations = models.user.objects.filter(register_time__gte = last_time).count()
             day_translations = models.translation.objects.filter(time__gte = last_time).count()
+
             html_text = loader.render_to_string('Email/report_email.html', {'details': {"regs": day_registrations,
                                                                                         "trans": day_translations,
                                                                                         "from": last_time,
                                                                                         "to": datetime.datetime.now()} })
+            print(day_registrations, day_translations, 'email_tobesent')
+
             subject = "Adivasi Swara Activity Report"
             send_mail(subject, 'plain_text', from_mail, admin_mails, html_message=html_text)
             print("email sent")
-            time.sleep(24*60*60) #delay in seconds
         print ("Exiting " + self.name)
 
 data = pd.read_csv("https://github.com/cgnetswara/TransDataCollectionBackend/raw/master/projectBackEnd/main/res/hindi_sentences.csv", delimiter = '\t', names=["tatoeba", "number", "hindi"])
 
-# emailThread = EmailThread()
-# emailThread.start()
+emailThread = EmailThread()
+emailThread.start()
 
 def index(request):
     return HttpResponse("This was successfull")
