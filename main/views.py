@@ -109,6 +109,8 @@ def fetchQuestion(request):
         # Take care of database end case
         userObject = models.user.objects.get(phone=request.POST['phone'])
         total_translated = models.total_translated.objects.latest('id').progress
+        userObject.progress = total_translated
+        userObject.save()
         # print(data.head())
         if total_translated >= len(data['hindi']):
             return HttpResponse("EOF")
