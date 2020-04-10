@@ -7,9 +7,11 @@ class user(models.Model):
     points = models.IntegerField()
     progress = models.IntegerField(editable=False)
     register_time = models.DateTimeField(default=datetime.datetime.now())
+    trans_num = models.IntegerField(editable=False)
+    ordering = ('-trans_num',)
 
     def __str__(self):
-        return str(self.phone) + " | " + str(self.progress)
+        return str(self.phone) + " | " + str(self.trans_num)
 
 class translation(models.Model):
     questionId = models.IntegerField()
