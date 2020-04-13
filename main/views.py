@@ -52,6 +52,7 @@ class EmailThread (threading.Thread):
         print("email sent")
 
     def run(self):
+        EmailThread.send_report()
         schedule.every().day.at("00:00").do(EmailThread.send_report)
         while True: 
     
@@ -65,7 +66,7 @@ class EmailThread (threading.Thread):
 data = pd.read_csv("https://github.com/cgnetswara/TransDataCollectionBackend/raw/master/projectBackEnd/main/res/hindi_sentences.csv", delimiter = '\t', names=["tatoeba", "number", "hindi"])
 
 emailThread = EmailThread()
-# emailThread.start()
+emailThread.start()
 
 def index(request):
     return HttpResponse("This was successfull")
