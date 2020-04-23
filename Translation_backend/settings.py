@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': 'ADIVASI_RADIO',
         'USER': 'root',
         'HOST': 'cgdbaws.cv23wjqihuhm.ap-south-1.rds.amazonaws.com',
-        'PASSWORD': 'CGDBAWSsql',
+        'PASSWORD': '',
         'PORT': '3306',
     }
 }
@@ -117,7 +117,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'aadivasiswara@gmail.com' #Please Enter your email here
-EMAIL_HOST_PASSWORD = 'lenzklaw' #Password
+EMAIL_HOST_PASSWORD = '' #Password
 
 
 # Internationalization

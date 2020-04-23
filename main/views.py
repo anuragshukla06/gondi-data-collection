@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http import JsonResponse
 from . import models
 import pandas as pd
 import json
@@ -66,7 +67,7 @@ class EmailThread (threading.Thread):
 data = pd.read_csv("https://github.com/cgnetswara/TransDataCollectionBackend/raw/master/projectBackEnd/main/res/hindi_sentences.csv", delimiter = '\t', names=["tatoeba", "number", "hindi"])
 
 emailThread = EmailThread()
-emailThread.start()
+# emailThread.start() TODO: Uncomment this
 
 def index(request):
     return HttpResponse("This was successfull")
@@ -126,7 +127,7 @@ def submitAnswer(request):
 @csrf_exempt
 def fetchQuestion(request):
     if request.method == 'POST':
-        # possible optimisation if progress is saved locally.
+        # possible optimisation if progress is saved locally. 
         # Take care of database end case
         userObject = models.user.objects.get(phone=request.POST['phone'])
         total_translated = models.total_translated.objects.latest('id').progress
@@ -136,3 +137,45 @@ def fetchQuestion(request):
         if total_translated >= len(data['hindi']):
             return HttpResponse("EOF")
         return HttpResponse(data['hindi'].iloc[total_translated])
+
+def fetchQuestionOffline(request, num):
+
+    total_translated = models.total_translated.objects.latest('id')
+    arr = []
+    for i in range(total_translated.progress, total_translated.progress+num):
+        arr.append({'qId': i, 'question':data['hindi'].iloc[i]})
+    total_translated.progress += num 
+    total_translated.save()
+    response = {'response': arr}
+    print(response)
+    return HttpResponse(json.dumps(response, ensure_ascii=False))
+
+'''
+The Post request has arguments:
+    answers: JSON Array of responses [ {"qId": integer, "translation": string, "regionId": Integer} ]
+    phone: Phone number of the user
+'''
+@csrf_exempt
+def submitAnswerOffline(request):
+    if request.method == 'POST':
+        # possible optimisation if progress is saved locally. 
+        # Take care of database end case
+        print()
+        params = request.POST
+        json_arr = params['answers']; phone = params['phone']
+        # print(json_arr, type(json_arr))
+        userObject = models.user.objects.get(phone=phone)
+        responses = json.loads(json_arr)
+
+        for response in responses:
+            translationObject = models.translation(questionId=response['qId'], 
+                                                    question=data['hindi'].iloc[response['qId']], 
+                                                    answer=response['translation'],regionId=response['regionId'], 
+                                                    by=userObject,
+                                                    time=datetime.datetime.now())
+            
+            userObject.trans_num += 1
+            userObject.points += 1
+            translationObject.save()
+        userObject.save()
+        return HttpResponse("SUCCESS")
