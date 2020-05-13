@@ -16,13 +16,18 @@ class user(models.Model):
 class translation(models.Model):
     questionId = models.IntegerField()
     regionId = models.IntegerField()
-    question = models.CharField(max_length=100)
-    answer = models.CharField(max_length=100)
+    question = models.CharField(max_length=1000)
+    answer = models.CharField(max_length=1000)
     by = models.ForeignKey(user, on_delete=models.CASCADE)
     time = models.DateTimeField(default=datetime.datetime.now())
+    speech = models.FileField(default=None)
 
     def __str__(self):
         return "Id:" + str(self.questionId) +" | " + str(self.question)[:5] + " | " + str(self.answer)[:5] + " | " + str(self.by.phone)
 
 class total_translated(models.Model):
     progress = models.IntegerField()
+
+class tempModel(models.Model):
+    name = models.CharField(max_length=10)
+    file = models.FileField()

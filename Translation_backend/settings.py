@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ['gondi-data-collection.52kajbsigc.ap-south-1.elasticbeanstalk.c
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -37,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'import_export',
+    
+
 ]
 
 MIDDLEWARE = [
@@ -133,9 +136,13 @@ USE_L10N = True
 
 USE_TZ = True
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
+
+
 
 STATIC_URL = '/static/'
 PROJECT_ROOT   =   os.path.join(os.path.abspath(__file__))

@@ -12,6 +12,8 @@ from django.core.mail import send_mail
 import schedule
 from django.template import loader
 from django.db.models import Count
+from .serializers import FileSerializer
+from django.core.files.base import ContentFile
 # Create your views here.
 # print("YES")
 
@@ -101,17 +103,25 @@ def submitAnswer(request):
     if request.method == 'POST':
         dicti = {}
         params = request.POST
-        phone = params['phone']; answer = params['answer']; addPoint = int(params['addPoint']); regionId = params['regionId']
+        phone = params['phone']; answer = params['answer']; addPoint = int(params['addPoint']); regionId = params['regionId'];
         userObject = models.user.objects.get(phone=phone)
         print(answer, 'answer_debug')
         # f = open("test.txt", "w")
         # f.write(answer)
         # f.close()
+
+        files = request.FILES.getlist('files')
+        up_file = None
+        if len(files):
+            up_file = files[0]
+
+        up_file.name = str(userObject.progress) + ".mp3"
         translationObject = models.translation(questionId=userObject.progress, 
                                                     question=data['hindi'].iloc[userObject.progress], 
                                                     answer=answer,regionId=regionId, 
                                                     by=userObject,
-                                                    time=datetime.datetime.now())
+                                                    time=datetime.datetime.now(),
+                                                    speech=up_file)
         print(translationObject.answer, 'answer_debug_after_database')
         translationObject.save()
         update_progress(userObject)
@@ -162,20 +172,47 @@ def submitAnswerOffline(request):
         # Take care of database end case
         print()
         params = request.POST
-        json_arr = params['answers']; phone = params['phone']
+        json_arr = params['answers']; phone = params['phone'];
+        files = request.FILES.getlist('files');
+
+
         # print(json_arr, type(json_arr))
         userObject = models.user.objects.get(phone=phone)
         responses = json.loads(json_arr)
 
-        for response in responses:
-            translationObject = models.translation(questionId=response['qId'], 
-                                                    question=data['hindi'].iloc[response['qId']], 
-                                                    answer=response['translation'],regionId=response['regionId'], 
+        for responseI in range(len(responses)):
+            up_file = None
+            if len(files):
+                up_file = files[responseI]
+                up_file.name = str(responses[responseI]['qId']) + ".mp3"
+            translationObject = models.translation(questionId=responses[responseI]['qId'], 
+                                                    question=data['hindi'].iloc[responses[responseI]['qId']], 
+                                                    answer=responses[responseI]['translation'],regionId=responses[responseI]['regionId'], 
                                                     by=userObject,
-                                                    time=datetime.datetime.now())
+                                                    time=datetime.datetime.now(),
+                                                    speech=up_file)
             
             userObject.trans_num += 1
             userObject.points += 1
             translationObject.save()
         userObject.save()
         return HttpResponse("SUCCESS")
+
+@csrf_exempt
+def aud_upload(request):
+
+    # up_file = request.FILES['file']
+    # up_file.name = "random.mp3"
+    files = request.FILES.getlist('files')
+    print(len(files))
+    for i in files:
+        temp = models.tempModel(name='anurag', file=i)
+        temp.save()
+    return HttpResponse("SUCCESS")
+
+    # file_serializer = FileSerializer(data=request.FILES)
+    # if file_serializer.is_valid():
+    #     data = file_serializer['file']
+    #     print(type(data))
+    #     obj = models.tempModel(name=request.POST['name'], file=data)
+    #     obj.save()

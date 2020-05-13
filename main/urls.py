@@ -8,4 +8,4 @@ urlpatterns = [
     path('fetchTransDetails/', views.trans_num_details),
     path('fetchQuestionOffline/<int:num>', views.fetchQuestionOffline),
     path('submitAnswerOffline/', views.submitAnswerOffline),
-]
+] 
