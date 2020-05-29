@@ -6,7 +6,7 @@ import pandas as pd
 import json
 import xlsxwriter
 import os
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from django.views.decorators.csrf import csrf_exempt
 import datetime, time
 import threading
@@ -35,6 +35,8 @@ class EmailThread (threading.Thread):
             'diptendudip@gmail.com',
             'vishnuprasad.k214@gmail.com',
             'sebastinssanty@gmail.com',
+            'cgnetswara002@gmail.com',
+            'shu@cgnet.in'
         ]
         from_mail = 'aadivasiswara@gmail.com'
         last_time = datetime.datetime.now()-datetime.timedelta(1)
@@ -53,11 +55,39 @@ class EmailThread (threading.Thread):
         print(last_regs, last_trans, total_regs, total_trans)
 
         subject = "Adivasi Swara Activity Report"
-        # send_mail(subject, 'plain_text', from_mail, admin_mails, html_message=html_text) TODO: Uncomment this line
+        send_mail(subject, 'plain_text', from_mail, admin_mails, html_message=html_text)
         print("Stats email sent")
 
         ########## SENDING LEADER WISE REPORT ###############
 
+                # - FIRST TIME DATA FILL UP INITIALIZATION CODE (DO NOT RUN AT THE RUNTIME, KEEP IT COMMENTED)
+        
+
+        # team_data = pd.read_excel("C:\\Users\\lenovo\\Projects\\gondi-data-collection\\main\\res\\team_data.xlsx")
+        # team_data.dropna(how='all')
+        # print(team_data)
+        # last_leader = None
+
+        # for i in range(len(team_data)):
+        #     if not(pd.isnull(team_data['Leaders Name'].iloc[i])):
+        #         last_leader = team_data['Contact Number '].iloc[i]
+        #         last_leader = models.user.objects.filter(phone = last_leader)
+        #         if len(last_leader):
+        #             last_leader = last_leader[0]
+        #             last_leader.leader = LEADER
+        #             last_leader.save()
+            
+        #     else:
+        #         if last_leader:
+        #             member_ph = team_data['Contact Number '].iloc[i]
+        #             member = models.user.objects.filter(phone = member_ph)
+        #             if member:
+        #                 member = member[0]
+        #                 member.leader = last_leader
+        #                 member.save()
+
+
+        #### MAKING REPORT #######
         LEADER = models.user.objects.get(phone='LEADER')
         leaders = models.user.objects.filter(leader = LEADER)
         str_date = datetime.datetime.now().strftime("%m_%d_%Y")
@@ -88,9 +118,12 @@ class EmailThread (threading.Thread):
             row += 1
             worksheet.write(row, col, 'PHONE', column_head_format)
             worksheet.write(row, col+1, 'Number of Translations', column_head_format)
+            row += 1
             #Add Another heading for column heads
 
-            row += 1
+            worksheet.write(row, col, leader.phone)
+            worksheet.write(row, col, leader.trans_num)
+
             members = models.user.objects.filter(leader=leader)
             for member in members:
                 worksheet.write(row, col, member.phone)
@@ -104,6 +137,20 @@ class EmailThread (threading.Thread):
             row += 1
 
         workbook.close()
+
+
+        #### SENDING REPORT VIA EMAIL #####
+
+        leader_rep_mail = EmailMessage(
+        'Leader Wise Report',
+        'Find attached leaderwise report',
+        from_mail,
+        ['shukla.anurag0006@gmail.com', 'shu@cgnet.in', 'cgnetswara002@gmail.com'],
+        )
+
+        leader_rep_mail.attach_file(filename)
+        leader_rep_mail.send()
+
         print("Leader wise report sent.")
 
         
@@ -116,7 +163,7 @@ class EmailThread (threading.Thread):
             # Checks whether a scheduled task  
             # is pending to run or not 
             schedule.run_pending() 
-            time.sleep(300) 
+            time.sleep(120) 
             total_regs = models.user.objects.all().count() # hack to get around database timeout issue
     
 
