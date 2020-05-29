@@ -1,0 +1,185 @@
+[33mcommit fb379d0cda5675a8553d87a79fcc867a5ebd33b0[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Fri May 29 12:15:22 2020 +0530
+
+    Feature Added: Leaderwise Report
+
+[33mcommit e31184ebb612afc9a96e748ad9e9b0d92fd5e299[m[33m ([m[1;31mgithub/master[m[33m)[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Wed May 13 18:36:31 2020 +0530
+
+    Feature Addition: Speech Input
+
+[33mcommit b3c1a0c93b7b76f7c57257c6241e0fc7f0845943[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Thu Apr 23 17:38:07 2020 +0530
+
+    Feature Addition: Offline translation
+
+[33mcommit 65a4a9bfc43796f21837b55f284d52f64f2dbbdc[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Mon Apr 13 10:12:04 2020 +0530
+
+    Registration Bug Fix
+
+[33mcommit 71106ef15bd49f52ac22805e255a1a6e09bc23b8[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Fri Apr 10 15:32:17 2020 +0530
+
+    Feature Addition: Translation Numbers
+
+[33mcommit 2feb1b8238967794d65195f4d873a50b81ca47bd[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Wed Mar 25 23:09:31 2020 +0530
+
+    Bug Fixed: Question Map Progress
+
+[33mcommit c9a3468b0f5a2856eae73be5009c6b2bdcf3e37c[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Tue Mar 24 08:40:46 2020 +0530
+
+    Bug Fix: Hack to get around db connection timeout
+
+[33mcommit 8898bb50e287df5eb6c03fa2da2f4dbf48ddeb51[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Thu Mar 19 22:06:11 2020 +0530
+
+    Bug Fix: Typo
+
+[33mcommit 7c10aa985b970cac934292393e81fe2edb780e92[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Thu Mar 19 20:47:33 2020 +0530
+
+    Feature Addition: Automated email report
+
+[33mcommit 14353c61ad3c5fd2c4c07a9ff66b818c4b3e3b13[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Mon Mar 16 18:04:54 2020 +0530
+
+    Admin Emails Updated
+
+[33mcommit 7fa44813ea41a4962403a9a73ea703e6847e1216[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Mon Mar 16 17:50:36 2020 +0530
+
+    Functionality Addtion: Automated Email
+
+[33mcommit 0904a05c2d97523287bd97e5990462bbff9db1fd[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Fri Mar 6 16:41:37 2020 +0530
+
+    BUG_FIXED: Incompatible Datatypes
+
+[33mcommit 8dbafbfd48ad0bb3bbe9e5524a8a8596b0da51e6[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Fri Mar 6 16:41:10 2020 +0530
+
+    BUG_FIX: Incompatible datatypes
+
+[33mcommit 0f75694ee8bdb63a9ee7f678154a845c1c406f74[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Fri Mar 6 01:33:19 2020 +0530
+
+    settings.py
+
+[33mcommit 6f14f105bec7e1146209e3d8b86e85006492a6b5[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Fri Mar 6 01:20:38 2020 +0530
+
+    UPDATE: requirements.txt
+
+[33mcommit b5c24aa631ad63d98c356e579fe2be4bb34b842e[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Fri Mar 6 01:11:14 2020 +0530
+
+    FEATURE_ADDITION: Fixed duplicate translations
+
+[33mcommit ac2e08fbe2154f7e45fdcaacd16e839dfc949453[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Thu Mar 5 23:56:38 2020 +0530
+
+    SYSTEM_UPDATE: Updated database settings
+
+[33mcommit a9700d759d89b9b82d554c411648c2a66597b18f[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Thu Mar 5 23:29:45 2020 +0530
+
+    Feature Addition: Admin Import Export Integrated
+
+[33mcommit faf3dc511d1ddfbf0986b3c4001520a3ad247e35[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Sun Feb 16 13:37:28 2020 +0530
+
+    Bug Fixed: Conversion from get API's to POST
+
+[33mcommit cbe73e3ccad08abc0fd14579e8a0f04ced3cfc9a[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Sat Feb 15 17:03:15 2020 +0530
+
+    admin static issue fixed.
+
+[33mcommit b21a99281eeef6a483fc09d58c4cb0c3419a434f[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Sat Feb 15 16:01:00 2020 +0530
+
+    Settings Update: Allowed host changed
+
+[33mcommit a661779a082662f43ad3eae7f18a1568a1d9e770[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Sat Feb 15 15:55:55 2020 +0530
+
+    requirements edit
+
+[33mcommit 3a41f7ea35b8bac1966f51549a5236da15cf298e[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Sat Feb 15 15:03:23 2020 +0530
+
+    psycopg2 removed
+
+[33mcommit 1126701e074792fe829c183de2a0dafcd89cbf44[m[33m ([m[1;31mheroku/master[m[33m, [m[1;31mheroku/HEAD[m[33m)[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Sat Oct 5 16:45:18 2019 +0530
+
+    region added
+
+[33mcommit cc4aa8c2de56bc879187804462f2eed08834a44d[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Sat Oct 5 13:11:41 2019 +0530
+
+    database change
+
+[33mcommit 2612e9a3c5af1168aa823d8b080104951238920e[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Sat Oct 5 12:43:57 2019 +0530
+
+    database change
+
+[33mcommit 929cba7d2f651d225c76489b8dc6bb1f851ca230[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Sat Oct 5 12:40:55 2019 +0530
+
+    excel file online
+
+[33mcommit 99bd8101d0481f4124c5ad84896bf6385f89fc1b[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Sat Oct 5 12:26:53 2019 +0530
+
+    excel file online
+
+[33mcommit b90bdd6a4e38c3cb635237db4c475b1d7657aa3b[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Sat Oct 5 12:00:41 2019 +0530
+
+    initial commit
+
+[33mcommit a27710c3d1111cbb0731c2f36bb0508f2d90de93[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Sat Oct 5 11:58:46 2019 +0530
+
+    initial commit
+
+[33mcommit 61f93e7535f2caf94f743963ca58f2ae1aef7c2e[m
+Author: Anurag Shukla <shukla.anurag0006@gmail.com>
+Date:   Sat Oct 5 11:56:20 2019 +0530
+
+    initial commit

@@ -9,7 +9,7 @@ class userResource(resources.ModelResource):
         model = models.user
 
 class translationResource(resources.ModelResource):
-    class Meta:
+    class Meta:     
         model = models.translation
 
 class userAdmin(ImportExportModelAdmin):

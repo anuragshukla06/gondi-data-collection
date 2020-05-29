@@ -4,6 +4,8 @@ from django.http import JsonResponse
 from . import models
 import pandas as pd
 import json
+import xlsxwriter
+import os
 from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
 import datetime, time
@@ -51,8 +53,60 @@ class EmailThread (threading.Thread):
         print(last_regs, last_trans, total_regs, total_trans)
 
         subject = "Adivasi Swara Activity Report"
-        send_mail(subject, 'plain_text', from_mail, admin_mails, html_message=html_text)
-        print("email sent")
+        # send_mail(subject, 'plain_text', from_mail, admin_mails, html_message=html_text) TODO: Uncomment this line
+        print("Stats email sent")
+
+        ########## SENDING LEADER WISE REPORT ###############
+
+        LEADER = models.user.objects.get(phone='LEADER')
+        leaders = models.user.objects.filter(leader = LEADER)
+        str_date = datetime.datetime.now().strftime("%m_%d_%Y")
+        DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "res\leader_report")
+        filename = os.path.join(DIR, "Leaderwise_Report_" + str_date + ".xlsx")
+        print(filename, "hjdbjhdcsdbchsbcjkdsb")
+
+        workbook = xlsxwriter.Workbook(filename)
+        worksheet = workbook.add_worksheet()
+
+        merge_format = workbook.add_format({
+                    'bold': 1,
+                    'border': 1,
+                    'align': 'center',
+                    'valign': 'vcenter',
+                    'fg_color': 'yellow'}) #Fancy heading for leader
+        
+        column_head_format = workbook.add_format( {
+            'bold': 1
+        })
+        row = 0
+        col = 0
+        for leader in leaders:
+            # Add heading here with leader phone number
+            total = leader.trans_num # Total translations by a group
+            worksheet.merge_range(row, col, row, col+1, "LEADER: " + leader.phone, merge_format)
+            
+            row += 1
+            worksheet.write(row, col, 'PHONE', column_head_format)
+            worksheet.write(row, col+1, 'Number of Translations', column_head_format)
+            #Add Another heading for column heads
+
+            row += 1
+            members = models.user.objects.filter(leader=leader)
+            for member in members:
+                worksheet.write(row, col, member.phone)
+                worksheet.write(row, col+1, member.trans_num)
+                total += member.trans_num
+                row += 1
+            
+            # Add a Total Field (in BOLD, include leader's count)
+            worksheet.write(row, col, "Total")
+            worksheet.write(row, col+1, total)
+            row += 1
+
+        workbook.close()
+        print("Leader wise report sent.")
+
+        
 
     def run(self):
         EmailThread.send_report()
@@ -69,7 +123,8 @@ class EmailThread (threading.Thread):
 data = pd.read_csv("https://github.com/cgnetswara/TransDataCollectionBackend/raw/master/projectBackEnd/main/res/hindi_sentences.csv", delimiter = '\t', names=["tatoeba", "number", "hindi"])
 
 emailThread = EmailThread()
-# emailThread.start() TODO: Uncomment this
+emailThread.start() 
+##TODO: Uncomment this
 
 def index(request):
     return HttpResponse("This was successfull")
@@ -114,8 +169,7 @@ def submitAnswer(request):
         up_file = None
         if len(files):
             up_file = files[0]
-
-        up_file.name = str(userObject.progress) + ".mp3"
+            up_file.name = str(userObject.progress) + ".mp3"
         translationObject = models.translation(questionId=userObject.progress, 
                                                     question=data['hindi'].iloc[userObject.progress], 
                                                     answer=answer,regionId=regionId, 
