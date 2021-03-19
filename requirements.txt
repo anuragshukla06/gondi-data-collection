@@ -13,4 +13,4 @@ whitenoise==4.1.4
 wincertstore==0.2
 mysqlclient==1.4.6
 schedule==0.6.0
-djangorestframework==3.11.0
+djangorestframework==3.11.2
