@@ -1,5 +1,5 @@
 django-import-export==2.0.2
-certifi==2019.11.28
+certifi==2022.12.7
 dj-database-url==0.5.0
 Django==2.1
 gunicorn==19.9.0
